@@ -1,0 +1,110 @@
+{
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Mon Dec 17 17:37:33 2018",
+    "version": "eosio::abi/1.0",
+    "structs": [
+        {
+            "name": "add",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "brand",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "car",
+            "base": "",
+            "fields": [
+                {
+                    "name": "key",
+                    "type": "uint64"
+                },
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "brand",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "erasee",
+            "base": "",
+            "fields": [
+                {
+                    "name": "key",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "tacut",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "key",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "take",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "key",
+                    "type": "uint64"
+                }
+            ]
+        }
+    ],
+    "types": [],
+    "actions": [
+        {
+            "name": "add",
+            "type": "add",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "erasee",
+            "type": "erasee",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "tacut",
+            "type": "tacut",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "take",
+            "type": "take",
+            "ricardian_contract": ""
+        }
+    ],
+    "tables": [
+        {
+            "name": "cars",
+            "type": "car",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        }
+    ],
+    "ricardian_clauses": [],
+    "abi_extensions": []
+}

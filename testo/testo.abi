@@ -1,0 +1,203 @@
+{
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Wed Dec 19 02:39:33 2018",
+    "version": "eosio::abi/1.0",
+    "structs": [
+        {
+            "name": "add",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "brand",
+                    "type": "string"
+                },
+                {
+                    "name": "key",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "auction",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "key",
+                    "type": "uint64"
+                },
+                {
+                    "name": "times",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "bid",
+            "base": "",
+            "fields": [
+                {
+                    "name": "key",
+                    "type": "uint64"
+                },
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "bidd",
+                    "type": "asset"
+                },
+                {
+                    "name": "lot",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "car",
+            "base": "",
+            "fields": [
+                {
+                    "name": "key",
+                    "type": "uint64"
+                },
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "brand",
+                    "type": "string"
+                },
+                {
+                    "name": "times",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "erase",
+            "base": "",
+            "fields": [
+                {
+                    "name": "key",
+                    "type": "uint64"
+                },
+                {
+                    "name": "swit",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "pbid",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "bidd",
+                    "type": "asset"
+                },
+                {
+                    "name": "lot",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "pra",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "bidr",
+                    "type": "asset"
+                }
+            ]
+        },
+        {
+            "name": "ptime",
+            "base": "",
+            "fields": []
+        },
+        {
+            "name": "status",
+            "base": "",
+            "fields": [
+                {
+                    "name": "lot",
+                    "type": "uint64"
+                }
+            ]
+        }
+    ],
+    "types": [],
+    "actions": [
+        {
+            "name": "add",
+            "type": "add",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "auction",
+            "type": "auction",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "erase",
+            "type": "erase",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "pbid",
+            "type": "pbid",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "pra",
+            "type": "pra",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "ptime",
+            "type": "ptime",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "status",
+            "type": "status",
+            "ricardian_contract": ""
+        }
+    ],
+    "tables": [
+        {
+            "name": "bids",
+            "type": "bid",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        },
+        {
+            "name": "cars",
+            "type": "car",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        }
+    ],
+    "ricardian_clauses": [],
+    "abi_extensions": []
+}

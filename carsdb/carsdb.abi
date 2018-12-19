@@ -1,0 +1,141 @@
+{
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Wed Dec 12 11:45:38 2018",
+    "version": "eosio::abi/1.0",
+    "structs": [
+        {
+            "name": "car",
+            "base": "",
+            "fields": [
+                {
+                    "name": "key",
+                    "type": "uint64"
+                },
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "brand",
+                    "type": "string"
+                },
+                {
+                    "name": "gov_number",
+                    "type": "string"
+                },
+                {
+                    "name": "color",
+                    "type": "string"
+                },
+                {
+                    "name": "engine_volume",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "carauction",
+            "base": "",
+            "fields": []
+        },
+        {
+            "name": "erase",
+            "base": "",
+            "fields": [
+                {
+                    "name": "key",
+                    "type": "uint64"
+                }
+            ]
+        },
+        {
+            "name": "insert",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "brand",
+                    "type": "string"
+                },
+                {
+                    "name": "gov_number",
+                    "type": "string"
+                },
+                {
+                    "name": "color",
+                    "type": "string"
+                },
+                {
+                    "name": "engine_volume",
+                    "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "modify",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "key",
+                    "type": "uint64"
+                },
+                {
+                    "name": "brand",
+                    "type": "string"
+                },
+                {
+                    "name": "gov_number",
+                    "type": "string"
+                },
+                {
+                    "name": "color",
+                    "type": "string"
+                },
+                {
+                    "name": "engine_volume",
+                    "type": "string"
+                }
+            ]
+        }
+    ],
+    "types": [],
+    "actions": [
+        {
+            "name": "carauction",
+            "type": "carauction",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "erase",
+            "type": "erase",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "insert",
+            "type": "insert",
+            "ricardian_contract": ""
+        },
+        {
+            "name": "modify",
+            "type": "modify",
+            "ricardian_contract": ""
+        }
+    ],
+    "tables": [
+        {
+            "name": "cars",
+            "type": "car",
+            "index_type": "i64",
+            "key_names": [],
+            "key_types": []
+        }
+    ],
+    "ricardian_clauses": [],
+    "abi_extensions": []
+}
