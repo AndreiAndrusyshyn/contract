@@ -1,5 +1,5 @@
 {
-    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Thu Dec 20 11:59:49 2018",
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Thu Dec 20 15:26:06 2018",
     "version": "eosio::abi/1.0",
     "structs": [
         {
@@ -66,7 +66,7 @@
             "fields": [
                 {
                     "name": "key",
-                    "type": "uint64"
+                    "type": "name"
                 },
                 {
                     "name": "user",
@@ -151,25 +151,6 @@
             ]
         },
         {
-            "name": "pra",
-            "base": "",
-            "fields": [
-                {
-                    "name": "user",
-                    "type": "name"
-                },
-                {
-                    "name": "bidr",
-                    "type": "asset"
-                }
-            ]
-        },
-        {
-            "name": "ptime",
-            "base": "",
-            "fields": []
-        },
-        {
             "name": "status",
             "base": "",
             "fields": [
@@ -205,16 +186,6 @@
         {
             "name": "pbid",
             "type": "pbid",
-            "ricardian_contract": ""
-        },
-        {
-            "name": "pra",
-            "type": "pra",
-            "ricardian_contract": ""
-        },
-        {
-            "name": "ptime",
-            "type": "ptime",
             "ricardian_contract": ""
         },
         {
