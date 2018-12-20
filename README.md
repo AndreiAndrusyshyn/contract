@@ -1,4 +1,4 @@
-# contract
+# eos contract
 
 
 Smart auction
