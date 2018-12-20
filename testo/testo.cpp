@@ -3,6 +3,7 @@
 #include <eosiolib/print.hpp>
 using namespace eosio;
 
+
 class [[eosio::contract]] testo: public eosio::contract {
 public:
 	using contract::contract; 
@@ -23,17 +24,17 @@ void add(name user , std::string brand, uint64_t key) {
 	print("gi");
 }
 [[eosio::action]]
-void erase(uint64_t key, uint64_t swit) {
-		bid_index bids(_self, _code.value);
-		auto iterator = bids.find(key);
+void eras(uint64_t key) {
+
+		balance_index balances(_self, _code.value);
+		auto iterator = balances.find(key);
 		//car_index cars(_self, _code.value);
 		//auto iterat = cars.find(key);
 	//switch(swit) {
 		//case 4: 
 		
-		
 		//eosio_assert(iterator != bids.end(), "Record does not exist");
-		bids.erase(iterator);
+		balances.erase(iterator);
 		//case 2:
 		
 		
@@ -68,16 +69,29 @@ if (iterato->times <= (now()/60))  {
 
 }
 else { 
-	sendmoney(user, "auction"_n , bidd, "m");
+	
 	bid_index bids(_code, _code.value);
 	
-	//auto iterator = bids.find(findheighest(lot));
-	auto iterator = bids.cbegin();
-	while(iterator != bids.cend()) {
-	if(iterator->bidd > bidd) {
-		print("bid more than:", iterator->bidd);
+	auto iterator = bids.find(user.value);
+
+	if(iterator == bids.cend() && iterator == bids.cbegin()) {
+		bids.emplace(user, [&](auto& row){
+		row.key = bids.available_primary_key();
+		row.user = user;
+		row.bidd = bidd;
+		row.lot = lot;
+
+	});
 	}
 	else {
+		iterator = bids.cbegin();
+	for (; iterator != bids.cend(); ){
+	if(iterator != bids.cend() && iterator->lot == lot && iterator->bidd >= bidd) {
+	print("bid more than:", iterator->bidd);
+	
+break;
+}
+else {
 	bids.emplace(user, [&](auto& row){
 		row.key = bids.available_primary_key();
 		row.user = user;
@@ -87,18 +101,23 @@ else {
 	});
 }
 }
+
+	
+	iterator++;
 }
+}
+
 	
 }
+	
+
 
 
 [[eosio::action]]
 
 void pra (name user, asset bidr) {
 //std::string blah = bidd;
-
 bid_index bids(_code, _code.value);
-
 auto ite = bids.cbegin();
 //print(blah);
 while(ite != bids.end()) {
@@ -153,21 +172,50 @@ else {
 }
 
 }
+
+
+[[eosio::action]]
+void addbalance(name from, name to, asset quantity, std::string m) {
+balance_index balances(_code, _code.value);
+frist.key = balances.available_primary_key();
+frist.user = from;
+frist.quan = quantity;
+
+memcpy(&frist_copy, &frist, sizeof(frist));
+
+auto iterator = balances.find("testo"_n.value);
+
+balances.emplace("testo"_n, [&](auto& row){
+	row.key = balances.available_primary_key();
+	row.user = frist_copy.user;
+	row.amount = frist_copy.quan;
+});
+
+
+
+
+
+/*	balance_index balances(_code, _code.value);
+	auto iterator = balances.find((*ptr).user.value);
+	
+	
+	balances.emplace((*ptr).user, [&](auto& row) {
+		row.key = balances.available_primary_key();
+		row.user = (*ptr).user;
+		row.amount = (*ptr).quan;
+});
+
+*/
+}
 private:
 
-	void sendbablo(name from,name to,  asset amoun, std::string d) {
-
-		action sendd=action (
-	permission_level{get_self() , "eosio.code"_n},
-	"eosio.token"_n,
-	"transfer"_n,
-	std::make_tuple(from,to,  amoun ,d ) 
-	);
-	sendd.send();
-
-
-
-	};
+struct b
+{
+	uint64_t key;
+	name user;
+	asset quan;
+}frist, frist_copy ;
+	
 
 
 void sendback (name user, uint64_t key) {
@@ -210,9 +258,19 @@ struct [[eosio::table]] bid {
 	
 	
 };
-
-
 typedef eosio::multi_index<"bids"_n, bid, indexed_by<"lot"_n, const_mem_fun<bid, uint64_t, &bid::by_lot>>>bid_index;
+
+
+struct [[eosio::table]] balance
+{	
+	uint64_t key;
+	name user; 
+	asset amount;
+	uint64_t primary_key() const {return key;}
+
+};
+
+typedef eosio::multi_index<"balances"_n, balance> balance_index; 
 
 struct [[eosio::table]] car {
 		uint64_t key;
@@ -229,4 +287,43 @@ typedef eosio::multi_index<"cars"_n, car, indexed_by<"times"_n, const_mem_fun<ca
 };
 
 
-EOSIO_DISPATCH(testo, (add)(auction)(erase)(pbid)(ptime)(status)(pra))
+extern "C" {
+	
+   void apply( uint64_t receiver, uint64_t code, uint64_t action ) { 
+    
+    if(code==name("eosio.token").value && action==name("transfer").value){
+    	execute_action(name(receiver), name(receiver), &testo::addbalance );
+    	
+    }
+    else if (code==receiver && action==name("add").value){
+    	execute_action(name(receiver), name(code), &testo::add );
+
+          }
+    else if (code==receiver && action==name("auction").value){
+    	execute_action(name(receiver), name(code), &testo::auction );
+
+          }
+
+    else if (code==receiver && action==name("eras").value){
+    	execute_action(name(receiver), name(code), &testo::eras );
+
+          }
+    else if (code==receiver && action==name("pbid").value){
+    	execute_action(name(receiver), name(code), &testo::pbid );
+
+          }
+    else if (code==receiver && action==name("status").value){
+    	execute_action(name(receiver), name(code), &testo::status );
+
+          }
+          else if (code==receiver && action==name("addbalance").value){
+    	execute_action(name(receiver), name(code), &testo::addbalance );
+
+          }
+        
+        
+ }
+}
+
+
+//EOSIO_DISPATCH(testo, (add)(auction)(erase)(pbid)(ptime)(status)(pra))
