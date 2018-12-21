@@ -1,5 +1,5 @@
 {
-    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Thu Dec 20 15:26:06 2018",
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Fri Dec 21 12:48:16 2018",
     "version": "eosio::abi/1.0",
     "structs": [
         {
@@ -33,7 +33,7 @@
                     "type": "name"
                 },
                 {
-                    "name": "quantity",
+                    "name": "amount",
                     "type": "asset"
                 },
                 {
@@ -64,10 +64,6 @@
             "name": "balance",
             "base": "",
             "fields": [
-                {
-                    "name": "key",
-                    "type": "name"
-                },
                 {
                     "name": "user",
                     "type": "name"
@@ -128,7 +124,7 @@
             "fields": [
                 {
                     "name": "key",
-                    "type": "uint64"
+                    "type": "name"
                 }
             ]
         },
