@@ -1,25 +1,7 @@
 {
-    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Fri Dec 21 12:48:16 2018",
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Fri Dec 21 17:48:36 2018",
     "version": "eosio::abi/1.0",
     "structs": [
-        {
-            "name": "add",
-            "base": "",
-            "fields": [
-                {
-                    "name": "user",
-                    "type": "name"
-                },
-                {
-                    "name": "brand",
-                    "type": "string"
-                },
-                {
-                    "name": "key",
-                    "type": "uint64"
-                }
-            ]
-        },
         {
             "name": "addbalance",
             "base": "",
@@ -39,6 +21,24 @@
                 {
                     "name": "m",
                     "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "addcar",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "brand",
+                    "type": "string"
+                },
+                {
+                    "name": "key",
+                    "type": "uint64"
                 }
             ]
         },
@@ -124,7 +124,7 @@
             "fields": [
                 {
                     "name": "key",
-                    "type": "name"
+                    "type": "uint64"
                 }
             ]
         },
@@ -160,13 +160,13 @@
     "types": [],
     "actions": [
         {
-            "name": "add",
-            "type": "add",
+            "name": "addbalance",
+            "type": "addbalance",
             "ricardian_contract": ""
         },
         {
-            "name": "addbalance",
-            "type": "addbalance",
+            "name": "addcar",
+            "type": "addcar",
             "ricardian_contract": ""
         },
         {
@@ -206,7 +206,7 @@
             "key_types": []
         },
         {
-            "name": "cars",
+            "name": "carsd",
             "type": "car",
             "index_type": "i64",
             "key_names": [],

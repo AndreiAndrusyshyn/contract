@@ -1,7 +1,4 @@
 
-#include <eosiolib/print.hpp>
-#include <eosiolib/eosio.hpp>
-#include <eosiolib/asset.hpp>
 
 using namespace eosio;
 
@@ -11,10 +8,10 @@ public:
 	using contract::contract;
 
 	[[eosio::action]]
-	void add(name user, std::string brand, uint64_t key);
+	void addcar(name user, std::string brand, uint64_t key);
 
 	[[eosio::action]]
-	void eras(name key);
+	void eras(uint64_t key);
 
 	[[eosio::action]]
 	void auction(name user, uint64_t key, uint64_t times);
@@ -30,7 +27,7 @@ public:
 	
 	void sendback(name user, uint64_t key);
 
-	asset findheighest(uint64_t lot);
+	uint64_t findheighest(uint64_t lot);
 
 private:
 	
@@ -65,11 +62,11 @@ private:
 		std::string brand;
 		uint64_t times;
 		uint64_t primary_key() const {return key;}
-		uint64_t by_time() const {return times;}
+		uint64_t get_secondary_1() const {return times;}
 
-		EOSLIB_SERIALIZE(car, (key)(user)(times))
+	   //	EOSLIB_SERIALIZE(car, (key)(user)(times))
 	};
-	typedef eosio::multi_index<"cars"_n, car, indexed_by<"times"_n, const_mem_fun<car, uint64_t, &car::by_time>>> car_index;
+	typedef eosio::multi_index<"carsd"_n, car, indexed_by<"times"_n, const_mem_fun<car, uint64_t, &car::get_secondary_1>>> car_index;
 
 };
 
@@ -81,28 +78,28 @@ extern "C" {
 			execute_action(name(receiver), name(receiver), &testo::addbalance );
 
 		}
-		else if (code == receiver && action == name("add").value) {
-			execute_action(name(receiver), name(code), &testo::add );
+		else if (code == receiver && action == name("addcar").value) {
+			execute_action(name(receiver), name(code), &testo::addcar );
 
 		}
-		else if (code == receiver && action == name("auction").value) {
+		else if (code == receiver && action == name("auction"_n).value) {
 			execute_action(name(receiver), name(code), &testo::auction );
 
 		}
 
-		else if (code == receiver && action == name("eras").value) {
+		else if (code == receiver && action == name("eras"_n).value) {
 			execute_action(name(receiver), name(code), &testo::eras );
 
 		}
-		else if (code == receiver && action == name("pbid").value) {
+		else if (code == receiver && action == name("pbid"_n).value) {
 			execute_action(name(receiver), name(code), &testo::pbid );
 
 		}
-		else if (code == receiver && action == name("status").value) {
+		else if (code == receiver && action == name("status"_n).value) {
 			execute_action(name(receiver), name(code), &testo::status );
 
 		}
-		else if (code == receiver && action == name("addbalance").value) {
+		else if (code == receiver && action == name("addbalance"_n).value) {
 			execute_action(name(receiver), name(code), &testo::addbalance );
 
 		}
