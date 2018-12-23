@@ -1,5 +1,5 @@
 {
-    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Mon Dec 17 17:37:33 2018",
+    "____comment": "This file was generated with eosio-abigen. DO NOT EDIT Sun Dec 23 23:07:47 2018",
     "version": "eosio::abi/1.0",
     "structs": [
         {
@@ -13,6 +13,20 @@
                 {
                     "name": "brand",
                     "type": "string"
+                }
+            ]
+        },
+        {
+            "name": "auction",
+            "base": "",
+            "fields": [
+                {
+                    "name": "user",
+                    "type": "name"
+                },
+                {
+                    "name": "key",
+                    "type": "uint64"
                 }
             ]
         },
@@ -35,23 +49,9 @@
             ]
         },
         {
-            "name": "erasee",
+            "name": "erase",
             "base": "",
             "fields": [
-                {
-                    "name": "key",
-                    "type": "uint64"
-                }
-            ]
-        },
-        {
-            "name": "tacut",
-            "base": "",
-            "fields": [
-                {
-                    "name": "user",
-                    "type": "name"
-                },
                 {
                     "name": "key",
                     "type": "uint64"
@@ -81,13 +81,13 @@
             "ricardian_contract": ""
         },
         {
-            "name": "erasee",
-            "type": "erasee",
+            "name": "auction",
+            "type": "auction",
             "ricardian_contract": ""
         },
         {
-            "name": "tacut",
-            "type": "tacut",
+            "name": "erase",
+            "type": "erase",
             "ricardian_contract": ""
         },
         {
