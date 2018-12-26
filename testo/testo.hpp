@@ -11,7 +11,7 @@ public:
 	void addcar(name user, std::string brand, uint64_t key);
 
 	[[eosio::action]]
-	void erase(uint64_t key);
+	void eras(uint64_t key);
 
 	[[eosio::action]]
 	void auction(name user, uint64_t key, uint64_t times);
@@ -87,8 +87,8 @@ extern "C" {
 
 		}
 
-		else if (code == receiver && action == name("erase"_n).value) {
-			execute_action(name(receiver), name(code), &testo::erase );
+		else if (code == receiver && action == name("eras"_n).value) {
+			execute_action(name(receiver), name(code), &testo::eras );
 
 		}
 		else if (code == receiver && action == name("pbid"_n).value) {

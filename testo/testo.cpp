@@ -16,7 +16,7 @@ void testo::addcar(name user , std::string brand, uint64_t key) {
 
 }
 
-void testo::erase(uint64_t key) {
+void testo::eras(uint64_t key) {
 	bid_index bids(_self, _code.value);
 	auto itr = bids.find(key);
 
@@ -86,7 +86,7 @@ void testo::pbid (name user, asset bidd, uint64_t lot) {
 				else
 				{
 					itbal = balances.find(itbid->user.value);
-					balances.modify(itbal, user, [&](auto & row) {
+					balances.modify(itbal, user, [&](auto & row){
 						row.amount += itbid->bidd;
 					});
 
@@ -110,33 +110,25 @@ void testo::pbid (name user, asset bidd, uint64_t lot) {
 }
 
 void testo::status(uint64_t lot) {
+	/*
+			car_index carsd(_code, _code.value);
+			bid_index bids(_code, _code.value);
+			auto iter = bids.find(findheighest(lot));
+			auto iterator = carsd.find(lot);
 
+			if (iterator->times < (now() / 60) ) {
 
-	car_index cars(get_self(), get_self().value);
-	bid_index bids(get_self(), get_self().value);
-	auto itcar = cars.find(lot);
-	auto itbid = bids.find(findheighest(lot));
+				print("heighest bid:", iter->bidd, "winner is:" , iter->user);
 
-	if ((now() / 60) > itcar->times && itcar->times != 0) {
-		print(itbid->user);
-		sendback(itbid->user, lot);
+				sendback(iter->user, iterator->key);
+			}
+			else {
 
-		/*
-				itbid = bids.find(itcar->user.value);
+				print("heighest bid:", iter->bidd);
 
-				bids.modify(itbid, itcar->user, [&](auto& row){
-					row.amount +=itbid->bidd;
-				});
-				row.amount +=itbid->bidd;
-				*/
-	}
-	else {
-		print("Lot not yet on auction");
-	}
-
+			}
+	*/
 }
-
-
 
 
 void testo::addbalance(name from, name to, asset amount, std::string m) {
@@ -165,7 +157,7 @@ void testo::sendback (name user, uint64_t key) {
 
 	action sendd = action (
 	                   permission_level{get_self() , "active"_n},
-	                   "testsen"_n,
+	                   "testsend"_n,
 	                   "take"_n,
 	                   std::make_tuple(user, key )
 	               );
