@@ -20,14 +20,14 @@ public:
 	void pbid(name user, asset bidd, uint64_t lot);
 
 	[[eosio::action]]
-	void status(uint64_t lot);
+	void status(name user, uint64_t lot);
 
 	[[eosio::action]]
 	void addbalance(name from, name to, asset amount, std::string m);
 	
 	void sendback(name user, uint64_t key);
 
-	uint64_t findheighest(uint64_t lot);
+	int findheighest(uint64_t lot);
 
 private:
 	
