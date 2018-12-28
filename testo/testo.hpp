@@ -20,14 +20,17 @@ public:
 	void pbid(name user, asset bidd, uint64_t lot);
 
 	[[eosio::action]]
-	void status(name user, uint64_t lot);
+	void addbalance(name from, name to, asset amount, std::string m);
 
 	[[eosio::action]]
-	void addbalance(name from, name to, asset amount, std::string m);
+	void finish(uint64_t lot);
+	
+	bool checknotnull(uint64_t lot);
+	bool checktime(uint64_t lot);
+	bool checkbal(name user, asset bidd);
+
 	
 	void sendback(name user, uint64_t key);
-
-	int findheighest(uint64_t lot);
 
 private:
 	
@@ -95,15 +98,15 @@ extern "C" {
 			execute_action(name(receiver), name(code), &testo::pbid );
 
 		}
-		else if (code == receiver && action == name("status"_n).value) {
-			execute_action(name(receiver), name(code), &testo::status );
-
-		}
+	
 		else if (code == receiver && action == name("addbalance"_n).value) {
 			execute_action(name(receiver), name(code), &testo::addbalance );
 
 		}
-		
+		else if (code == receiver && action == name("finish"_n).value) {
+			execute_action(name(receiver), name(code), &testo::finish );
+
+		}
 	}
 }
 

@@ -25,8 +25,6 @@ void testo::eras(uint64_t key) {
 
 }
 
-
-
 void testo::auction (name user, uint64_t key, uint64_t times ) {
 
 	uint64_t t = times + (now() / 60);
@@ -38,108 +36,6 @@ void testo::auction (name user, uint64_t key, uint64_t times ) {
 	});
 
 }
-
-void testo::pbid (name user, asset bidd, uint64_t lot) {
-
-	car_index carsd(_code, _code.value);
-	bid_index bids(_code, _code.value);
-	balance_index balances(_code, _code.value);
-	auto itcar = carsd.find(lot);
-	auto itbal = balances.find(user.value);
-	auto itbid = bids.cbegin();
-
-	if (itcar->times <= (now() / 60)) {
-		print("This lot time has expired");
-	}
-	else
-	{
-		if (itbid == bids.cend() && itbid == bids.cbegin()) {
-			bids.emplace("testo"_n, [&](auto & row) {
-				row.key = bids.available_primary_key();
-				row.user = user;
-				row.bidd = bidd;
-				row.lot = lot;
-			});
-
-			balances.modify(itbal, user , [&](auto & row) {
-				row.amount -= bidd;
-			});
-		}
-		else
-		{
-
-			if (findheighest(lot) == -1) {
-				bids.emplace("testo"_n, [&](auto & row) {
-					row.key = bids.available_primary_key();
-					row.user = user;
-					row.bidd = bidd;
-					row.lot = lot;
-				});
-
-				balances.modify(itbal, user , [&](auto & row) {
-				row.amount -= bidd;
-			});
-
-			}
-			else {
-				itbid = bids.find(findheighest(lot));
-				if (itbal->amount < bidd || itbid->bidd >= bidd )
-				{
-					print("Your bidd is greater than amount of your tokens or is less than heighest bid");
-				}
-				else
-				{
-					itbal = balances.find(itbid->user.value);
-					balances.modify(itbal, user, [&](auto & row) {
-						row.amount += itbid->bidd;
-					});
-
-					bids.erase(itbid);
-
-
-					bids.emplace("testo"_n, [&](auto & row) {
-						row.key = bids.available_primary_key();
-						row.user = user;
-						row.bidd = bidd;
-						row.lot = lot;
-					});
-					itbal = balances.find(user.value);
-					balances.modify(itbal, user , [&](auto & row) {
-						row.amount -= bidd;
-					});
-				}
-			}
-		}
-	}
-}
-
-void testo::status(name user ,uint64_t lot) {
-
-	balance_index balances(_code, _code.value);
-	car_index cars(_code, _code.value);
-	bid_index bids(_code, _code.value);
-	auto itbal = balances.cbegin();
-	auto itcar = cars.find(lot);
-	auto itbid = bids.find(findheighest(lot));
-
-	if((now()/60) > itcar->times && itcar->times != 0) {
-		print(itbid->user);
-		sendback(itbid->user, lot);
-
-				itbal = balances.find(itcar->user.value);
-				balances.modify(itbal, user, [&](auto& row){
-					row.amount += itbid->bidd;
-				});
-				
-	}
-	else {
-		print("Lot not yet on auction");
-	}
-
-}
-
-
-
 
 void testo::addbalance(name from, name to, asset amount, std::string m) {
 	balance_index balances(get_self(), get_self().value);
@@ -176,16 +72,117 @@ void testo::sendback (name user, uint64_t key) {
 
 };
 
-int testo::findheighest(uint64_t lot) {
-	asset hibid ;
-	int hikey = -1;
-	bid_index bids(_code, _code.value);
-	for (auto iterator = bids.cbegin(); iterator != bids.cend(); iterator++ ) {
-		if (iterator->lot == lot) {
-			return iterator->key;
-		}
+void testo::finish(uint64_t lot) {
 
+		bid_index bids(_self, _self.value);
+
+		balance_index balances(_self, _self.value);
+		auto itbal = balances.cbegin();
+		auto it = bids.get_index<"lot"_n>();
+		auto itt = it.find(lot);
+
+		car_index cars(_self, _self.value);
+		auto itcar = cars.find(lot);
+
+		itbal = balances.find(itcar->user.value);
+		balances.modify(itbal, get_self(), [&](auto& row ){
+			row.amount += itt->bidd;
+		});
+
+		
+		sendback(itt->user, lot);
+
+}
+
+bool testo::checknotnull(uint64_t lot) {
+	car_index cars (_self, _self.value);
+	auto it = cars.find(lot);
+	return ( it->times == 0 ?  true : false );
+}
+
+bool testo::checktime( uint64_t lot) {
+	car_index cars(_self, _self.value);
+	auto iterator = cars.find(lot);
+
+	return (iterator->times > (now() / 60) ? true : false );
+
+}
+
+bool testo::checkbal(name user, asset bidd) {
+
+	balance_index balances(_self, _self.value);
+	auto itbal = balances.find(user.value);
+
+	return (itbal->amount < bidd ? true : false);
+}
+
+void testo::pbid(name user, asset bidd , uint64_t lot ) {
+
+	bid_index bids(_self, _self.value);
+	auto it = bids.get_index<"lot"_n>();
+
+	auto itt = it.find(lot);
+	auto er = bids.cbegin(); 
+	balance_index balances(_self, _self.value);
+	auto itbal = balances.find(user.value);
+	
+
+	if (checknotnull(lot) == true) { print("Car not on auct"); return;}
+	else if(checkbal(user, bidd)== true) {print("Your balance is lesser than your bidd"); return;}
+	else if (checktime(lot) == false) {
+		finish(lot); 
+		
+
+		return;
 	}
 
-	return hikey;
+
+
+	itbal = balances.find(user.value);
+
+
+	
+
+	if (itt == it.end() ) {
+
+		bids.emplace("testo"_n, [&](auto & row) {
+			row.key = bids.available_primary_key();
+			row.user = user;
+			row.bidd = bidd;
+			row.lot = lot;
+		}) ;
+
+		balances.modify(itbal, user, [&](auto & row) {
+			row.amount -= bidd;
+		});
+	}
+	else if (bidd > itt->bidd) {
+		itbal = balances.find(itt->user.value);
+		balances.modify(itbal, user, [&](auto & row) {
+			row.amount += itt->bidd;
+		});
+
+
+		er= bids.find(itt->key);
+		bids.erase(er);
+
+		bids.emplace("testo"_n, [&](auto & row ) {
+
+			row.key = bids.available_primary_key();
+			row.user = user;
+			row.bidd = bidd;
+			row.lot = lot;
+		});
+		itbal = balances.find(user.value);
+		balances.modify(itbal, user, [&](auto & row) {
+			row.amount -= bidd;
+		});
+
+
+	}
+	else {
+		print("your bid is smaller than heighest, bid more than: ", itt->bidd);
+	}
+
+
 }
