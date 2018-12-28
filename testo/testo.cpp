@@ -80,7 +80,7 @@ void testo::finish(uint64_t lot) {
 		auto itbal = balances.cbegin();
 		auto it = bids.get_index<"lot"_n>();
 		auto itt = it.find(lot);
-
+		auto er = bids.find(itt->key);
 		car_index cars(_self, _self.value);
 		auto itcar = cars.find(lot);
 
@@ -89,8 +89,10 @@ void testo::finish(uint64_t lot) {
 			row.amount += itt->bidd;
 		});
 
-		
 		sendback(itt->user, lot);
+
+		bids.erase(itt->key);
+		cars.erase(itcar);
 
 }
 
@@ -129,19 +131,9 @@ void testo::pbid(name user, asset bidd , uint64_t lot ) {
 
 	if (checknotnull(lot) == true) { print("Car not on auct"); return;}
 	else if(checkbal(user, bidd)== true) {print("Your balance is lesser than your bidd"); return;}
-	else if (checktime(lot) == false) {
-		finish(lot); 
-		
-
-		return;
-	}
-
-
+	else if (checktime(lot) == false) { finish(lot); return;}
 
 	itbal = balances.find(user.value);
-
-
-	
 
 	if (itt == it.end() ) {
 
