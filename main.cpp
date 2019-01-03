@@ -9,3 +9,7 @@ int int main(int argc, char const *argv[]) {
 
 
 std::std::vector<int> v;
+<<<<<<< HEAD
+=======
+dfdfgf
+>>>>>>> f
